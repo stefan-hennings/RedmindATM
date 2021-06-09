@@ -19,10 +19,9 @@ public class Withdrawal {
         billTypesMap.put(denomination, quantity);
     }
     
-    public Withdrawal decline(String declineReason) {
+    public void decline(String declineReason) {
         isApproved = false;
         this.declineReason = declineReason;
-        return this;
     }
     
     @Override
