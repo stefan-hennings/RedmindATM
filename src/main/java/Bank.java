@@ -27,7 +27,7 @@ public class Bank {
         }
     }
     
-    public int getBillQuantityOfValue(int billDenomination) {
+    public int getBillQuantityOfDenomination(int billDenomination) {
         return availableBillsMap.get(billDenomination);
     }
     

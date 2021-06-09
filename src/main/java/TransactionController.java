@@ -39,7 +39,7 @@ public class TransactionController {
     
     private int decideBillTypes(int amountToWithdraw, Withdrawal withdrawal) {
         for (Integer denomination : bank.getSortedKeysDescending()) {
-            int billsOfCurrentType = Integer.min(amountToWithdraw / denomination, bank.getBillQuantityOfValue(denomination));
+            int billsOfCurrentType = Integer.min(amountToWithdraw / denomination, bank.getBillQuantityOfDenomination(denomination));
             amountToWithdraw -= billsOfCurrentType * denomination;
             
             withdrawal.addBillType(denomination, billsOfCurrentType);

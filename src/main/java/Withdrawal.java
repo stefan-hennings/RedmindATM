@@ -35,10 +35,10 @@ public class Withdrawal {
             status.append(String.format("Reason: %s\n", declineReason));
         } else {
             status.append("Bills used: \n");
-            for (int value : getSortedKeysDescending()) {
+            for (int denomination : getSortedKeysDescending()) {
                 status.append(String.format("""
                         %4d: %d
-                        """, value, billTypesMap.get(value)));
+                        """, denomination, billTypesMap.get(denomination)));
             }
         }
         
