@@ -26,6 +26,7 @@ public class BankTest {
     @Test
     void getTotalValueTest() {
         assertEquals(bankMocked.getTotalValue(), 4000);
+        assertNotEquals(bankMocked.getTotalValue(), 3900);
     }
     
     @Test
@@ -37,8 +38,11 @@ public class BankTest {
         
         bankMocked.removeNotes(withdrawalMocked);
         assertEquals(bankMocked.getAvailableBillsMap().get(1000), 1);
+        assertNotEquals(bankMocked.getAvailableBillsMap().get(1000), 2);
         assertEquals(bankMocked.getAvailableBillsMap().get(500), 2);
+        assertNotEquals(bankMocked.getAvailableBillsMap().get(500), 3);
         assertEquals(bankMocked.getAvailableBillsMap().get(100), 3);
+        assertNotEquals(bankMocked.getAvailableBillsMap().get(100), 5);
     }
     
     @Test
