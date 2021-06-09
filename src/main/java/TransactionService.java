@@ -3,7 +3,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class TransactionController {
+public class TransactionService {
     private final Bank bank;
     
     public void attemptWithdrawal(int amountToWithdraw) {

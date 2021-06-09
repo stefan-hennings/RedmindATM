@@ -8,15 +8,15 @@ public class Main {
         defaultBills.put(500, 3);
         defaultBills.put(100, 5);
         
-        TransactionController transactionController = new TransactionController(new Bank(defaultBills));
+        TransactionService transactionService = new TransactionService(new Bank(defaultBills));
         
-        transactionController.attemptWithdrawal(1500);
-        transactionController.attemptWithdrawal(700);
-        transactionController.attemptWithdrawal(400);
-        transactionController.attemptWithdrawal(1100);
-        transactionController.attemptWithdrawal(1000);
-        transactionController.attemptWithdrawal(700);
-        transactionController.attemptWithdrawal(300);
-        System.out.println(transactionController.getBank().getTotalValue());
+        transactionService.attemptWithdrawal(1500);
+        transactionService.attemptWithdrawal(700);
+        transactionService.attemptWithdrawal(400);
+        transactionService.attemptWithdrawal(1100);
+        transactionService.attemptWithdrawal(1000);
+        transactionService.attemptWithdrawal(700);
+        transactionService.attemptWithdrawal(300);
+        System.out.println(transactionService.getBank().getTotalValue());
     }
 }
