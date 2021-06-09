@@ -1,10 +1,15 @@
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TransactionService {
     private final Bank bank;
+    private List<Withdrawal> withdrawalLog = new ArrayList<>();
     
     public void attemptWithdrawal(int amountToWithdraw) {
         Withdrawal withdrawal = new Withdrawal(amountToWithdraw);
@@ -17,7 +22,7 @@ public class TransactionService {
                 withdrawal.setApproved(true);
             }
         }
-        
+        withdrawalLog.add(withdrawal);
         processWithdrawal(withdrawal);
     }
     
