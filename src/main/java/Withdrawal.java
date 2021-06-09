@@ -24,6 +24,10 @@ public class Withdrawal {
         this.declineReason = declineReason;
     }
     
+    public List<Integer> getSortedKeysDescending() {
+        return billTypesMap.keySet().stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+    }
+    
     @Override
     public String toString() {
         StringBuilder status = new StringBuilder(String.format("""
@@ -42,9 +46,5 @@ public class Withdrawal {
         }
         
         return status.toString();
-    }
-    
-    public List<Integer> getSortedKeysDescending() {
-        return billTypesMap.keySet().stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
     }
 }
