@@ -1,4 +1,3 @@
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +13,7 @@ public class TransactionService {
     public void attemptWithdrawal(int amountToWithdraw) {
         Withdrawal withdrawal = new Withdrawal(amountToWithdraw);
         if (isValidWithdrawalAmount(withdrawal)) {
-            int amountRemaining = decideBillTypes(withdrawal.getAmount(), withdrawal);
+            int amountRemaining = decideBillTypes(withdrawal);
     
             if (amountRemaining != 0) {
                 withdrawal.decline("Not enough bills of the correct types to complete withdrawal. Try a different amount. ");
@@ -26,7 +25,7 @@ public class TransactionService {
         processWithdrawal(withdrawal);
     }
     
-    private boolean isValidWithdrawalAmount(Withdrawal withdrawal) {
+    public boolean isValidWithdrawalAmount(Withdrawal withdrawal) {
         if (withdrawal.getAmount() <= 0 || withdrawal.getAmount() % 100 != 0) {
             withdrawal.decline("Invalid withdrawal amount. Must be a positive integer divisible by 100. ");
             return false;
@@ -37,14 +36,16 @@ public class TransactionService {
         return true;
     }
     
-    private int decideBillTypes(int amountToWithdraw, Withdrawal withdrawal) {
+    public int decideBillTypes(Withdrawal withdrawal) {
+        int remainingAmountToWithdraw = withdrawal.getAmount();
         for (Integer denomination : bank.getSortedKeysDescending()) {
-            int billsOfCurrentType = Integer.min(amountToWithdraw / denomination, bank.getBillQuantityOfDenomination(denomination));
-            amountToWithdraw -= billsOfCurrentType * denomination;
+            int billsOfCurrentType = Integer.min(remainingAmountToWithdraw / denomination,
+                    bank.getBillQuantityOfDenomination(denomination));
+            remainingAmountToWithdraw -= billsOfCurrentType * denomination;
             
             withdrawal.addBillType(denomination, billsOfCurrentType);
         }
-        return amountToWithdraw;
+        return remainingAmountToWithdraw;
     }
     
     public void processWithdrawal(Withdrawal withdrawal) {
