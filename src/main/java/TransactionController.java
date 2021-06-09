@@ -8,25 +8,20 @@ public class TransactionController {
     
     public void attemptWithdrawal(int amountToWithdraw) {
         Withdrawal withdrawal = new Withdrawal(amountToWithdraw);
-        validateWithdrawalAndSetBillTypes(withdrawal);
+        if (isValidWithdrawalAmount(withdrawal)) {
+            int amountRemaining = decideBillTypes(withdrawal.getAmount(), withdrawal);
+    
+            if (amountRemaining != 0) {
+                withdrawal.decline("Not enough bills of the correct types to complete withdrawal. Try a different amount. ");
+            } else {
+                withdrawal.setApproved(true);
+            }
+        }
+        
         processWithdrawal(withdrawal);
     }
     
-    public void validateWithdrawalAndSetBillTypes(Withdrawal withdrawal) {
-        if (!validateWithdrawalAmount(withdrawal)) {
-            return;
-        }
-        
-        int amountRemaining = decideBillTypes(withdrawal.getAmount(), withdrawal);
-        
-        if (amountRemaining != 0) {
-            withdrawal.decline("Not enough bills of the correct types to complete withdrawal. Try a different amount. ");
-        } else {
-            withdrawal.setApproved(true);
-        }
-    }
-    
-    private boolean validateWithdrawalAmount(Withdrawal withdrawal) {
+    private boolean isValidWithdrawalAmount(Withdrawal withdrawal) {
         if (withdrawal.getAmount() <= 0 || withdrawal.getAmount() % 100 != 0) {
             withdrawal.decline("Invalid withdrawal amount. Must be a positive integer divisible by 100. ");
             return false;
